@@ -1,0 +1,18 @@
+node_modules/
+.next/
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.log
+openrc.sh
+creds.sh
+Enhancing Cybersecurity Detection Quality_ Advanced SOC Techniques and Best Practices3 copy.md
+Enhancing Cybersecurity Detection Quality_ Advanced SOC Techniques and Best Practices3.pdf
+flavor_list.txt
+flavors.txt
+terraform/apply_*_output.txt
+terraform/plan_output.txt
+terraform/version.txt
+whip-05-323597.mp3
+whip-05-323597.mp3:Zone.Identifier
