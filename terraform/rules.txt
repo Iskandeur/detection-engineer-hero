@@ -1,0 +1,19 @@
++--------------------------------------+-------------+-----------+-----------+------------+-----------+-----------------------+----------------------+
+| ID                                   | IP Protocol | Ethertype | IP Range  | Port Range | Direction | Remote Security Group | Remote Address Group |
++--------------------------------------+-------------+-----------+-----------+------------+-----------+-----------------------+----------------------+
+| 2d918e52-7255-42a2-93f0-e1fd25c415f7 | None        | IPv4      | 0.0.0.0/0 |            | ingress   | None                  | None                 |
+| 373780b8-f1eb-4cb0-86d8-795a02cf70f4 | None        | IPv6      | ::/0      |            | ingress   | None                  | None                 |
+| 44295abc-6a20-4c9d-a15e-8f868245319e | udp         | IPv6      | ::/0      | 26:464     | egress    | None                  | None                 |
+| 5374aa68-ff6a-42b5-90a8-950a9d56a5f3 | tcp         | IPv6      | ::/0      | 588:65535  | egress    | None                  | None                 |
+| 76581b3d-f9d8-4956-b528-71b081f948b0 | tcp         | IPv6      | ::/0      | 1:24       | egress    | None                  | None                 |
+| 84e509c5-965e-4e32-b7d4-939dd4d01a7e | tcp         | IPv6      | ::/0      | 26:464     | egress    | None                  | None                 |
+| 89398d5e-9ad1-4006-ba90-e22ca20a69eb | tcp         | IPv6      | ::/0      | 466:586    | egress    | None                  | None                 |
+| 93ae9a7e-f47a-4b76-bcbb-eeebc51f7118 | tcp         | IPv4      | 0.0.0.0/0 | 588:65535  | egress    | None                  | None                 |
+| 9757eb6c-7185-488b-9973-c651f120060d | ipv6-icmp   | IPv6      | ::/0      |            | egress    | None                  | None                 |
+| 97d4eb35-e891-4c5c-8378-8687635c15ea | udp         | IPv4      | 0.0.0.0/0 | 466:586    | egress    | None                  | None                 |
+| 9a77f5b1-4d5b-4710-be95-77d65b67bc53 | udp         | IPv6      | ::/0      | 466:586    | egress    | None                  | None                 |
+| a2a2c254-b7bb-4cc0-ac92-10e1c509756f | udp         | IPv4      | 0.0.0.0/0 | 26:464     | egress    | None                  | None                 |
+| b446fa83-011a-4a24-9852-5d29ab8a3fa9 | tcp         | IPv4      | 0.0.0.0/0 | 26:464     | egress    | None                  | None                 |
+| cee245a6-872f-455b-916f-63bf01578096 | icmp        | IPv4      | 0.0.0.0/0 |            | egress    | None                  | None                 |
+| fcf3597e-01da-417a-aa99-73ba797eddc7 | udp         | IPv4      | 0.0.0.0/0 | 588:65535  | egress    | None                  | None                 |
++--------------------------------------+-------------+-----------+-----------+------------+-----------+-----------------------+----------------------+

@@ -1,0 +1,70 @@
+[0m[1mdata.openstack_networking_secgroup_v2.default: Reading...[0m[0m
+[0m[1mopenstack_compute_keypair_v2.keypair: Refreshing state... [id=detection-hero-key][0m
+[0m[1mdata.openstack_networking_secgroup_v2.default: Read complete after 5s [id=efa8cc22-bd6b-45e0-b55b-0112f1736c1a][0m
+[0m[1mopenstack_compute_instance_v2.app_instance: Refreshing state... [id=3566d6e2-9f61-40a3-aa07-939a405e9b75][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # openstack_compute_instance_v2.app_instance[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "openstack_compute_instance_v2" "app_instance" {
+      [31m-[0m[0m access_ip_v4        = "57.130.28.4" [90m-> null[0m[0m
+      [31m-[0m[0m all_metadata        = {} [90m-> null[0m[0m
+      [31m-[0m[0m all_tags            = [] [90m-> null[0m[0m
+      [31m-[0m[0m availability_zone   = "eu-west-par-b" [90m-> null[0m[0m
+      [31m-[0m[0m created             = "2025-12-04 10:37:42 +0000 UTC" [90m-> null[0m[0m
+      [31m-[0m[0m flavor_id           = "91fa3187-0f7d-489e-a75e-a7f6541482ee" [90m-> null[0m[0m
+      [31m-[0m[0m flavor_name         = "b3-8" [90m-> null[0m[0m
+      [31m-[0m[0m force_delete        = false [90m-> null[0m[0m
+      [31m-[0m[0m id                  = "3566d6e2-9f61-40a3-aa07-939a405e9b75" [90m-> null[0m[0m
+      [31m-[0m[0m image_id            = "936fffd1-b5bd-4efd-9e5c-41a6fbdb69d0" [90m-> null[0m[0m
+      [31m-[0m[0m image_name          = "Ubuntu 22.04" [90m-> null[0m[0m
+      [31m-[0m[0m key_pair            = "detection-hero-key" [90m-> null[0m[0m
+      [31m-[0m[0m name                = "detection-engineer-hero" [90m-> null[0m[0m
+      [31m-[0m[0m power_state         = "active" [90m-> null[0m[0m
+      [31m-[0m[0m region              = "EU-WEST-PAR" [90m-> null[0m[0m
+      [31m-[0m[0m security_groups     = [
+          [31m-[0m[0m "default",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m stop_before_destroy = false [90m-> null[0m[0m
+      [31m-[0m[0m tags                = [] [90m-> null[0m[0m
+      [31m-[0m[0m updated             = "2025-12-04 10:38:14 +0000 UTC" [90m-> null[0m[0m
+      [31m-[0m[0m user_data           = "a93d637dda827d123bd0977376bcc6fc0d82c2df" [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+
+      [31m-[0m[0m network {
+          [31m-[0m[0m access_network = false [90m-> null[0m[0m
+          [31m-[0m[0m fixed_ip_v4    = "57.130.28.4" [90m-> null[0m[0m
+          [31m-[0m[0m mac            = "fa:16:3e:24:26:97" [90m-> null[0m[0m
+          [31m-[0m[0m name           = "Ext-Net" [90m-> null[0m[0m
+          [31m-[0m[0m uuid           = "6d041167-5863-4cad-a165-d352bb6720ab" [90m-> null[0m[0m
+            [90m# (3 unchanged attributes hidden)[0m[0m
+        }
+    }
+
+[1m  # openstack_compute_keypair_v2.keypair[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "openstack_compute_keypair_v2" "keypair" {
+      [31m-[0m[0m fingerprint = "66:6e:7e:5f:b3:ee:c9:b0:b5:f4:7e:11:5a:6d:3e:42" [90m-> null[0m[0m
+      [31m-[0m[0m id          = "detection-hero-key" [90m-> null[0m[0m
+      [31m-[0m[0m name        = "detection-hero-key" [90m-> null[0m[0m
+      [31m-[0m[0m public_key  = <<-EOT
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCl6SO/BdtoJIjuJkXqNfJywaLLFer/H680wpXAiZgrQ3Dk6+LNsYlTAL7jdUc4Ucf0yxXAOtJJ4xltNfKFUqQc4EAEJhrwVm9hWnpChF40wiORB3mAo8VG2dxRjUqV47lAiDGWbGNVJbyi5J30HWyL6mCqs9j3+B7jqJZPqnyl74uUkWGiQ1rzMPWxs0DFbQ9nNQwtpvM9gOFdp92kjiB6qfN+gg2li4X5gSDIfUicLy298QkBoi5BqlpKGWL2UEDuANoDwrwWurVPauqqxuY5pbtOve5r1Scxh26SZsIJpBL2DAyBFEIXV4dPErsMgyojPEsGr8VDw/0K3NP6lMZD5b31Q8JQQhO5KNS/Yqrrdb1IttTuBjtROwYki/fhRlglVJJ7bYYE33VfnQUwNxLFi7T1hMQfv0uUEPufwE7ArCy6X2VR7dz/AVPw5h7Jb0R8QKWi6oZDl9HHNLjEqs2j4/VW0o5XuPFrxiCfTkEuKfJqW5PenfVt6SJ2UWCEiHIwBT6YlARReNVSi3l6oNtzFaTZrBLThy0LoxRqR89Ar5RIdOOcHQ/odCE9wYQQpcgjkPAlhkAzY+lJUa90sAfs5SIYqdcvWngWOq/blX72xHnjcUnZbqqQBNR4gAePQBl5xh5SR8a6TDOl5u6h4KifGnNTKPVrVq+faV8JfYKaYw== akela@DESKTOP-S3AP39U
+        EOT [90m-> null[0m[0m
+      [31m-[0m[0m region      = "EU-WEST-PAR" [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 0 to change, 2 to destroy.
+
+Changes to Outputs:
+  [31m-[0m[0m instance_ip = "57.130.28.4" [90m-> null[0m[0m
+[0m[1mopenstack_compute_instance_v2.app_instance: Destroying... [id=3566d6e2-9f61-40a3-aa07-939a405e9b75][0m[0m
+[0m[1mopenstack_compute_instance_v2.app_instance: Still destroying... [id=3566d6e2-9f61-40a3-aa07-939a405e9b75, 00m10s elapsed][0m[0m
+[0m[1mopenstack_compute_instance_v2.app_instance: Destruction complete after 13s[0m
+[0m[1mopenstack_compute_keypair_v2.keypair: Destroying... [id=detection-hero-key][0m[0m
+[0m[1mopenstack_compute_keypair_v2.keypair: Destruction complete after 0s[0m
+[0m[1m[32m
+Destroy complete! Resources: 2 destroyed.[0m

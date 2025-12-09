@@ -33,37 +33,71 @@ data "openstack_networking_secgroup_v2" "default" {
 # Rules removed due to Quota Exceeded. 
 # Please ensure ports 22 (SSH) and 3000 (HTTP) are open in the 'default' security group via OVH Manager.
 
+resource "openstack_networking_network_v2" "private_network" {
+  name           = "private-net"
+  admin_state_up = "true"
+}
+
+resource "openstack_networking_subnet_v2" "private_subnet" {
+  name            = "private-subnet"
+  network_id      = openstack_networking_network_v2.private_network.id
+  cidr            = "192.168.1.0/24"
+  ip_version      = 4
+  dns_nameservers = ["1.1.1.1", "8.8.8.8"]
+}
+
+resource "openstack_networking_router_v2" "router" {
+  name                = "router-gateway"
+  admin_state_up      = "true"
+  external_network_id = "6d041167-5863-4cad-a165-d352bb6720ab" # Ext-Net ID from error log
+}
+
+resource "openstack_networking_router_interface_v2" "router_interface" {
+  router_id = openstack_networking_router_v2.router.id
+  subnet_id = openstack_networking_subnet_v2.private_subnet.id
+}
+
 resource "openstack_compute_instance_v2" "app_instance" {
   name            = "detection-engineer-hero"
   image_name      = "Ubuntu 22.04"
-  flavor_name     = "b3-8" # Valid flavor from list
+  flavor_name     = "c3-4"
   key_pair        = openstack_compute_keypair_v2.keypair.name
   security_groups = ["default"]
 
   network {
-    name = "Ext-Net" # OVH public network name
+    uuid = openstack_networking_network_v2.private_network.id
   }
+
+  depends_on = [openstack_networking_router_interface_v2.router_interface]
 
   user_data = <<-EOF
     #!/bin/bash
     apt-get update
     apt-get install -y docker.io docker-compose git
 
-    # Create application directory
     mkdir -p /app
     cd /app
 
-    # Note: In a real deployment, you would clone the repo here.
-    # git clone https://github.com/your-user/detection-engineer-hero.git .
-    
-    # For now, just ensure Docker is ready
     systemctl enable docker
     systemctl start docker
     
-    echo "Instance ready for Detection Engineer Hero deployment"
+    echo "Instance prête pour le déploiement de Detection Engineer Hero"
   EOF
+}
+
+resource "openstack_networking_floatingip_v2" "fip" {
+  pool = "Ext-Net"
+}
+
+resource "openstack_compute_floatingip_associate_v2" "fip_assoc" {
+  floating_ip = openstack_networking_floatingip_v2.fip.address
+  instance_id = openstack_compute_instance_v2.app_instance.id
 }
 
 output "instance_ip" {
   value = openstack_compute_instance_v2.app_instance.access_ip_v4
+}
+
+output "floating_ip" {
+  value = openstack_networking_floatingip_v2.fip.address
 }
