@@ -14,14 +14,44 @@ export default function Home() {
                     Maîtrisez la méthodologie SOC, analysez les scénarios d'attaque et devenez un expert en détection.
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+                    <Link href="/foundations" className="group p-6 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                        <div className="flex flex-col items-center space-y-4">
+                            <div className="p-4 bg-blue-500/20 rounded-full group-hover:bg-blue-500/30 transition-colors">
+                                <BookOpen className="w-12 h-12 text-blue-500" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-blue-500">Foundations</h2>
+                            <p className="text-sm text-gray-400">SOC Models, Roles, History & Principles.</p>
+                        </div>
+                    </Link>
+
+                    <Link href="/tools" className="group p-6 border border-pink-500/30 rounded-xl hover:bg-pink-500/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)]">
+                        <div className="flex flex-col items-center space-y-4">
+                            <div className="p-4 bg-pink-500/20 rounded-full group-hover:bg-pink-500/30 transition-colors">
+                                <Shield className="w-12 h-12 text-pink-500" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-pink-500">Security Tools</h2>
+                            <p className="text-sm text-gray-400">Firewalls, EDR, SIEM & SOAR Deep Dive.</p>
+                        </div>
+                    </Link>
+
+                    <Link href="/engineering" className="group p-6 border border-cyan-400/30 rounded-xl hover:bg-cyan-400/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+                        <div className="flex flex-col items-center space-y-4">
+                            <div className="p-4 bg-cyan-400/20 rounded-full group-hover:bg-cyan-400/30 transition-colors">
+                                <Terminal className="w-12 h-12 text-cyan-400" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-cyan-400">Engineering</h2>
+                            <p className="text-sm text-gray-400">Detection Logic, Rules & Internals.</p>
+                        </div>
+                    </Link>
+
                     <Link href="/drill" className="group p-6 border border-cyber-green/30 rounded-xl hover:bg-cyber-green/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,65,0.2)]">
                         <div className="flex flex-col items-center space-y-4">
                             <div className="p-4 bg-cyber-green/20 rounded-full group-hover:bg-cyber-green/30 transition-colors">
                                 <Shield className="w-12 h-12 text-cyber-green" />
                             </div>
                             <h2 className="text-2xl font-bold text-cyber-green">Methodology Drill</h2>
-                            <p className="text-sm text-gray-400">Maîtrisez les 9 étapes de l'ingénierie de détection.</p>
+                            <p className="text-sm text-gray-400">Practice the 9-step methodology.</p>
                         </div>
                     </Link>
 
@@ -31,17 +61,7 @@ export default function Home() {
                                 <Terminal className="w-12 h-12 text-cyber-purple" />
                             </div>
                             <h2 className="text-2xl font-bold text-cyber-purple">Scenario Simulator</h2>
-                            <p className="text-sm text-gray-400">Analysez des attaques réelles et affinez vos règles.</p>
-                        </div>
-                    </Link>
-
-                    <Link href="/knowledge" className="group p-6 border border-blue-500/30 rounded-xl hover:bg-blue-500/10 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)]">
-                        <div className="flex flex-col items-center space-y-4">
-                            <div className="p-4 bg-blue-500/20 rounded-full group-hover:bg-blue-500/30 transition-colors">
-                                <BookOpen className="w-12 h-12 text-blue-500" />
-                            </div>
-                            <h2 className="text-2xl font-bold text-blue-500">Knowledge Base</h2>
-                            <p className="text-sm text-gray-400">Explorez les outils et concepts clés du SOC.</p>
+                            <p className="text-sm text-gray-400">Analyze real attacks and write rules.</p>
                         </div>
                     </Link>
                 </div>
