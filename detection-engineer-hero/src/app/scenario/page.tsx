@@ -22,93 +22,93 @@ interface Scenario {
 const SCENARIOS: Scenario[] = [
     {
         id: "powershell",
-        title: "PowerShell Malveillant",
-        description: "Un attaquant exécute un script PowerShell obfusqué pour télécharger et exécuter un malware.",
+        title: "Malicious PowerShell",
+        description: "An attacker executes an obfuscated PowerShell script to download and execute malware.",
         icon: <Terminal className="w-10 h-10 text-cyber-purple" />,
         correctTool: "EDR",
         draftRule: "powershell.exe AND (Invoke-WebRequest OR -EncodedCommand)",
         critiqueOptions: [
-            { id: "fp", text: "Elle génère trop de Faux Positifs.", isCorrect: false, feedback: "Vrai, mais incomplet. Pensez aussi aux contournements." },
-            { id: "bypass", text: "Elle est facile à contourner (Bypass).", isCorrect: false, feedback: "Oui, un simple alias 'iwr' contourne la règle. Mais ce n'est pas tout." },
-            { id: "missing", text: "Elle manque des scénarios (ex: IEX).", isCorrect: false, feedback: "Correct, mais il y a aussi des Faux Positifs." },
-            { id: "all", text: "Toutes les réponses ci-dessus.", isCorrect: true, feedback: "Exactement ! La règle est naïve : elle rate les alias, les LoLBins et les exécutions en mémoire." }
+            { id: "fp", text: "It generates too many False Positives.", isCorrect: false, feedback: "True, but incomplete. Consideration must be given to bypasses too." },
+            { id: "bypass", text: "It is easy to bypass.", isCorrect: false, feedback: "Yes, a simple alias 'iwr' bypasses the rule. But that's not all." },
+            { id: "missing", text: "It misses scenarios (e.g., IEX).", isCorrect: false, feedback: "Correct, but there are also False Positives." },
+            { id: "all", text: "All of the above.", isCorrect: true, feedback: "Exactly! The rule is naive: it misses aliases, LOLBins, and in-memory execution." }
         ],
         refinementOptions: [
-            { id: "admin", text: "Scripts d'administration lambda.", isCorrect: false, feedback: "Possible, mais cherchez un cas plus structurel." },
-            { id: "hypervisor", text: "Hyperviseurs / Agents de monitoring.", isCorrect: true, feedback: "Correct ! Les hyperviseurs (VMware, Hyper-V) utilisent souvent PowerShell encodé pour WMI." },
-            { id: "browser", text: "Mises à jour du navigateur.", isCorrect: false, feedback: "Rarement via PowerShell encodé." }
+            { id: "admin", text: "Standard admin scripts.", isCorrect: false, feedback: "Possible, but look for a more structural case." },
+            { id: "hypervisor", text: "Hypervisors / Monitoring Agents.", isCorrect: true, feedback: "Correct! Hypervisors (VMware, Hyper-V) often use encoded PowerShell for WMI." },
+            { id: "browser", text: "Browser updates.", isCorrect: false, feedback: "Rarely via encoded PowerShell." }
         ]
     },
     {
         id: "dns_exfil",
-        title: "Exfiltration DNS",
-        description: "Un attaquant exfiltre des données sensibles en les encodant dans des sous-domaines de requêtes DNS (Tunneling).",
+        title: "DNS Exfiltration",
+        description: "An attacker exfiltrates sensitive data by encoding it in DNS subdomains (Tunneling).",
         icon: <Network className="w-10 h-10 text-blue-500" />,
         correctTool: "NDR",
         draftRule: "DNS Query Length > 50 characters",
         critiqueOptions: [
-            { id: "fp", text: "Faux Positifs (CDN, Domaines longs).", isCorrect: true, feedback: "Exact ! De nombreux services légitimes (AWS, CDNs) ont des noms très longs." },
-            { id: "bypass", text: "L'attaquant peut utiliser des requêtes courtes.", isCorrect: false, feedback: "C'est vrai, mais le problème principal de cette règle est le bruit (FP)." },
-            { id: "protocol", text: "Le DNS n'est pas visible par le Firewall.", isCorrect: false, feedback: "Le Firewall voit le DNS, mais ne l'analyse pas aussi bien que le NDR." }
+            { id: "fp", text: "False Positives (CDNs, Long Domains).", isCorrect: true, feedback: "Exact! Many legitimate services (AWS, CDNs) have very long names." },
+            { id: "bypass", text: "The attacker can use short queries.", isCorrect: false, feedback: "True, but the main problem with this rule is noise (FP)." },
+            { id: "protocol", text: "DNS is not visible to the Firewall.", isCorrect: false, feedback: "The Firewall sees DNS, but doesn't analyze it as deeply as NDR." }
         ],
         refinementOptions: [
-            { id: "entropy", text: "Vérifier l'entropie et la fréquence par domaine racine.", isCorrect: true, feedback: "Parfait. L'entropie détecte l'encodage aléatoire et la fréquence détecte le volume." },
-            { id: "block", text: "Bloquer tout le trafic DNS sortant.", isCorrect: false, feedback: "Impossible, cela casserait l'accès Internet." },
-            { id: "user", text: "Alerter si l'utilisateur n'est pas admin.", isCorrect: false, feedback: "Non pertinent pour une exfiltration technique." }
+            { id: "entropy", text: "Check entropy and frequency per root domain.", isCorrect: true, feedback: "Perfect. Entropy detects random encoding and frequency detects volume." },
+            { id: "block", text: "Block all outbound DNS traffic.", isCorrect: false, feedback: "Impossible, that would break Internet access." },
+            { id: "user", text: "Alert if user is not admin.", isCorrect: false, feedback: "Not relevant for technical exfiltration." }
         ]
     },
     {
         id: "lsass_dump",
         title: "Credential Dumping (LSASS)",
-        description: "Un attaquant tente d'extraire les hashs NTLM de la mémoire du processus lsass.exe (ex: Mimikatz).",
+        description: "An attacker attempts to extract NTLM hashes from lsass.exe process memory (e.g., Mimikatz).",
         icon: <Key className="w-10 h-10 text-yellow-500" />,
         correctTool: "EDR",
         draftRule: "Process Access to lsass.exe",
         critiqueOptions: [
-            { id: "fp", text: "Trop générique (Antivirus, Updates).", isCorrect: true, feedback: "Oui ! De nombreux processus légitimes (AV, Google Update) touchent à LSASS." },
-            { id: "bypass", text: "L'attaquant peut renommer lsass.exe.", isCorrect: false, feedback: "Non, lsass est un processus système protégé, on ne peut pas le renommer facilement." },
-            { id: "missing", text: "Ne détecte pas le dump fichier.", isCorrect: false, feedback: "Si, l'accès au processus est la première étape." }
+            { id: "fp", text: "Too generic (Antivirus, Updates).", isCorrect: true, feedback: "Yes! Many legitimate processes (AV, Google Update) touch LSASS." },
+            { id: "bypass", text: "Attacker can rename lsass.exe.", isCorrect: false, feedback: "No, lsass is a protected system process, it cannot be easily renamed." },
+            { id: "missing", text: "Does not detect file dump.", isCorrect: false, feedback: "It does, process access is the first step." }
         ],
         refinementOptions: [
-            { id: "mask", text: "Vérifier les Access Masks (ex: 0x1010) et la Call Stack.", isCorrect: true, feedback: "Excellent. Seuls les accès avec des droits spécifiques (Read Memory) sont suspects." },
-            { id: "parent", text: "Vérifier si le parent est cmd.exe.", isCorrect: false, feedback: "Trop facile à contourner (parent spoofing)." },
-            { id: "time", text: "Alerter seulement la nuit.", isCorrect: false, feedback: "Mauvaise pratique. Les attaquants opèrent à toute heure." }
+            { id: "mask", text: "Check Access Masks (e.g., 0x1010) and Call Stack.", isCorrect: true, feedback: "Excellent. Only accesses with specific rights (Read Memory) are suspicious." },
+            { id: "parent", text: "Check if parent is cmd.exe.", isCorrect: false, feedback: "Too easy to bypass (parent spoofing)." },
+            { id: "time", text: "Alert only at night.", isCorrect: false, feedback: "Bad practice. Attackers operate at all hours." }
         ]
     },
     {
         id: "webshell",
         title: "Web Shell Upload",
-        description: "Un attaquant exploite une faille d'upload pour déposer un script PHP malveillant (Web Shell) sur le serveur web.",
+        description: "An attacker exploits an upload vulnerability to drop a malicious PHP script (Web Shell) on the web server.",
         icon: <Globe className="w-10 h-10 text-orange-500" />,
         correctTool: "WAF",
         draftRule: "http.request.uri ENDSWITH '.php'",
         critiqueOptions: [
-            { id: "fp", text: "Bloque toutes les pages PHP légitimes.", isCorrect: true, feedback: "C'est catastrophique. Cette règle casserait tout le site web." },
-            { id: "bypass", text: "L'attaquant peut utiliser .phtml.", isCorrect: false, feedback: "Vrai, mais le problème principal est le blocage légitime (FP)." },
-            { id: "missing", text: "Ne détecte pas l'upload via FTP.", isCorrect: false, feedback: "Le WAF ne voit que le HTTP, c'est une limitation connue." }
+            { id: "fp", text: "Blocks all legitimate PHP pages.", isCorrect: true, feedback: "Catastrophic. This rule would break the entire website." },
+            { id: "bypass", text: "Attacker can use .phtml.", isCorrect: false, feedback: "True, but the main problem is legitimate blocking (FP)." },
+            { id: "missing", text: "Does not detect FTP upload.", isCorrect: false, feedback: "WAF only sees HTTP, that is a known limitation." }
         ],
         refinementOptions: [
-            { id: "method", text: "Restreindre aux méthodes POST sur /upload.", isCorrect: true, feedback: "Bien mieux. On cible l'action d'upload spécifiquement." },
-            { id: "content", text: "Scanner le contenu pour 'system()'.", isCorrect: false, feedback: "Difficile pour un WAF (chiffrement, performance)." },
-            { id: "ip", text: "Bloquer les IP étrangères.", isCorrect: false, feedback: "Inefficace et source de problèmes métier." }
+            { id: "method", text: "Restrict to POST methods on /upload.", isCorrect: true, feedback: "Much better. Targeting the upload action specifically." },
+            { id: "content", text: "Scan content for 'system()'.", isCorrect: false, feedback: "Difficult for a WAF (encryption, performance)." },
+            { id: "ip", text: "Block foreign IPs.", isCorrect: false, feedback: "Ineffective and causes business issues." }
         ]
     },
     {
         id: "ransomware",
         title: "Ransomware Execution",
-        description: "Un processus commence à chiffrer massivement des fichiers utilisateur et dépose une note de rançon.",
+        description: "A process begins massively encrypting user files and drops a ransom note.",
         icon: <Lock className="w-10 h-10 text-red-600" />,
         correctTool: "EDR",
         draftRule: "File Write 'READ_ME.txt'",
         critiqueOptions: [
-            { id: "fp", text: "Un utilisateur peut créer ce fichier.", isCorrect: true, feedback: "Oui, un fichier texte n'est pas malveillant en soi." },
-            { id: "bypass", text: "L'attaquant peut changer le nom.", isCorrect: false, feedback: "Vrai, mais ce n'est pas le seul souci." },
-            { id: "missing", text: "Ne détecte pas le chiffrement.", isCorrect: false, feedback: "Exact, mais le FP est le premier problème à régler." }
+            { id: "fp", text: "A user can create this file.", isCorrect: true, feedback: "Yes, a text file is not malicious in itself." },
+            { id: "bypass", text: "Attacker can change the name.", isCorrect: false, feedback: "True, but that's not the only issue." },
+            { id: "missing", text: "Does not detect encryption.", isCorrect: false, feedback: "Correct, but the FP is the first problem to solve." }
         ],
         refinementOptions: [
-            { id: "behavior", text: "Détecter >100 écritures/sec + modification d'entropie.", isCorrect: true, feedback: "Excellent. C'est une signature comportementale typique du ransomware." },
-            { id: "extension", text: "Bloquer l'extension .encrypted.", isCorrect: false, feedback: "Trop facile à changer pour l'attaquant." },
-            { id: "backup", text: "Vérifier la suppression des Shadow Copies.", isCorrect: false, feedback: "Bon indicateur, mais secondaire par rapport au chiffrement." }
+            { id: "behavior", text: "Detect >100 writes/sec + entropy change.", isCorrect: true, feedback: "Excellent. This is a typical behavioral signature of ransomware." },
+            { id: "extension", text: "Block .encrypted extension.", isCorrect: false, feedback: "Too easy for the attacker to change." },
+            { id: "backup", text: "Check deletion of Shadow Copies.", isCorrect: false, feedback: "Good indicator, but secondary to encryption." }
         ]
     }
 ];
@@ -127,13 +127,13 @@ export default function ScenarioPage() {
     const handleToolSelection = (tool: string) => {
         playWhipSound();
         if (tool === currentScenario.correctTool) {
-            setFeedback({ type: "success", message: "Excellent choix ! C'est l'outil le plus adapté pour cette visibilité." });
+            setFeedback({ type: "success", message: "Excellent choice! This is the most suitable tool for this visibility." });
             setTimeout(() => {
                 setFeedback(null);
                 setGameState("draft_critique");
             }, 2000);
         } else {
-            setFeedback({ type: "error", message: "Pas idéal. Cet outil manque de visibilité spécifique pour cette attaque." });
+            setFeedback({ type: "error", message: "Not ideal. This tool lacks specific visibility for this attack." });
         }
     };
 
@@ -175,7 +175,7 @@ export default function ScenarioPage() {
             <div className="w-full max-w-5xl relative z-10">
                 <div className="flex justify-between items-center mb-12">
                     <Link href="/" onClick={playWhipSound} className="text-cyber-green hover:underline flex items-center gap-2">
-                        ← Retour
+                        ← Back
                     </Link>
                     <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyber-purple to-cyber-green glitch-text" data-text="SCENARIO SIMULATOR">
                         SCENARIO SIMULATOR
@@ -200,7 +200,7 @@ export default function ScenarioPage() {
                                 exit={{ opacity: 0 }}
                                 className="space-y-8"
                             >
-                                <h2 className="text-3xl font-bold text-center text-white mb-8">Choisissez votre Mission</h2>
+                                <h2 className="text-3xl font-bold text-center text-white mb-8">Choose Your Mission</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     {SCENARIOS.map((scenario) => (
                                         <button
@@ -235,13 +235,13 @@ export default function ScenarioPage() {
                                     "{currentScenario.description}"
                                 </p>
                                 <p className="text-gray-400">
-                                    Votre mission : Construire une détection robuste pour cette menace.
+                                    Your mission: Build a robust detection for this threat.
                                 </p>
                                 <button
                                     onClick={() => { playWhipSound(); setGameState("tool_selection"); }}
                                     className="mt-8 px-8 py-3 bg-cyber-purple hover:bg-cyber-purple/80 text-white rounded-lg font-bold transition-all flex items-center gap-2 mx-auto"
                                 >
-                                    Commencer la Mission <ArrowRight className="w-5 h-5" />
+                                    Start Mission <ArrowRight className="w-5 h-5" />
                                 </button>
                             </motion.div>
                         )}
@@ -254,9 +254,9 @@ export default function ScenarioPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Étape 1 : Sélection de l'Outil</h2>
+                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Step 1: Tool Selection</h2>
                                 <p className="text-lg text-gray-300">
-                                    Quel outil de sécurité est le plus approprié pour détecter cette attaque ?
+                                    Which security tool is most appropriate to detect this attack?
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                                     {["Firewall", "EDR", "NDR", "SIEM"].map((tool) => (
@@ -280,12 +280,12 @@ export default function ScenarioPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Étape 2 : Critique de la Règle</h2>
+                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Step 2: Rule Critique</h2>
                                 <div className="bg-black/50 p-4 rounded-lg font-mono text-sm text-green-400 border border-gray-700">
                                     {currentScenario.draftRule}
                                 </div>
                                 <p className="text-lg text-gray-300">
-                                    Cette règle "brouillon" a été proposée. Quel est son problème majeur ?
+                                    This "draft" rule has been proposed. What is its major problem?
                                 </p>
                                 <div className="space-y-3 mt-6">
                                     {currentScenario.critiqueOptions.map((option) => (
@@ -309,9 +309,9 @@ export default function ScenarioPage() {
                                 exit={{ opacity: 0, x: -20 }}
                                 className="space-y-6"
                             >
-                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Étape 3 : Affinage</h2>
+                                <h2 className="text-2xl font-bold text-cyber-green mb-4">Step 3: Refinement</h2>
                                 <p className="text-lg text-gray-300">
-                                    Comment affiner cette règle pour réduire les Faux Positifs ou améliorer la détection ?
+                                    How can we refine this rule to reduce False Positives or improve detection?
                                 </p>
                                 <div className="space-y-3 mt-6">
                                     {currentScenario.refinementOptions.map((option) => (
@@ -335,17 +335,17 @@ export default function ScenarioPage() {
                                 className="text-center space-y-6 py-12"
                             >
                                 <CheckCircle className="w-24 h-24 text-cyber-green mx-auto" />
-                                <h2 className="text-4xl font-bold text-white">Mission Accomplie !</h2>
+                                <h2 className="text-4xl font-bold text-white">Mission Accomplished!</h2>
                                 <p className="text-xl text-gray-300">
-                                    Vous avez maîtrisé la détection pour le scénario : <br />
+                                    You have mastered detection for scenario: <br />
                                     <span className="text-cyber-purple font-bold">{currentScenario.title}</span>
                                 </p>
                                 <div className="flex justify-center gap-4 mt-8">
                                     <button onClick={() => { playWhipSound(); setGameState("selection"); }} className="px-6 py-3 border border-gray-600 rounded-lg hover:bg-white/10 transition-colors">
-                                        Choisir une autre Mission
+                                        Choose Another Mission
                                     </button>
                                     <button onClick={() => { playWhipSound(); setGameState("intro"); }} className="px-6 py-3 bg-cyber-green text-black font-bold rounded-lg hover:bg-cyber-green/80 transition-colors">
-                                        Rejouer
+                                        Replay
                                     </button>
                                 </div>
                             </motion.div>

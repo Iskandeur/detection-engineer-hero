@@ -7,15 +7,15 @@ import Link from "next/link";
 import { playWhipSound } from "@/utils/sound";
 
 const STEPS = [
-    { id: 1, text: "Comprendre le Scénario d'Attaque" },
-    { id: 2, text: "Sélectionner l'Outil de Détection" },
-    { id: 3, text: "Écrire la Règle de Détection Initiale" },
-    { id: 4, text: "Identifier les Faux Positifs Potentiels" },
-    { id: 5, text: "Distinguer Vrais Positifs vs Faux Positifs" },
-    { id: 6, text: "Identifier les Techniques de Contournement" },
-    { id: 7, text: "Identifier les Scénarios Manquants" },
-    { id: 8, text: "Réécrire la Règle Optimisée" },
-    { id: 9, text: "Tester et Valider la Règle" },
+    { id: 1, text: "Understand the Attack Scenario" },
+    { id: 2, text: "Select the Detection Tool" },
+    { id: 3, text: "Write the Initial Detection Rule" },
+    { id: 4, text: "Identify Potential False Positives" },
+    { id: 5, text: "Distinguish True Positives vs False Positives" },
+    { id: 6, text: "Identify Evasion Techniques (Bypass)" },
+    { id: 7, text: "Identify Missing Scenarios" },
+    { id: 8, text: "Rewrite the Optimized Rule" },
+    { id: 9, text: "Test and Validate the Rule" },
 ];
 
 export default function DrillPage() {
@@ -48,7 +48,7 @@ export default function DrillPage() {
             }
         } else {
             // Incorrect
-            setFeedback("Ce n'est pas la bonne étape ! Réessayez.");
+            setFeedback("That's not the correct step! Try again.");
             setTimeout(() => setFeedback(null), 2000);
         }
     };
@@ -66,7 +66,7 @@ export default function DrillPage() {
             <div className="w-full max-w-6xl">
                 <div className="flex justify-between items-center mb-12">
                     <Link href="/" onClick={playWhipSound} className="text-cyber-green hover:underline flex items-center gap-2">
-                        ← Retour
+                        ← Back
                     </Link>
                     <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyber-green to-cyber-purple glitch-text" data-text="METHODOLOGY DRILL">
                         METHODOLOGY DRILL
@@ -79,7 +79,7 @@ export default function DrillPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Left Column: Available Steps */}
                     <div className="space-y-4">
-                        <h2 className="text-2xl font-semibold mb-6 text-gray-300">Étapes Disponibles</h2>
+                        <h2 className="text-2xl font-semibold mb-6 text-gray-300">Available Steps</h2>
                         <div className="grid gap-3">
                             <AnimatePresence>
                                 {availableSteps.map((step) => (
@@ -101,15 +101,15 @@ export default function DrillPage() {
                         {availableSteps.length === 0 && isComplete && (
                             <div className="p-8 bg-cyber-green/10 border border-cyber-green rounded-xl text-center">
                                 <CheckCircle className="w-16 h-16 text-cyber-green mx-auto mb-4" />
-                                <h3 className="text-2xl font-bold text-cyber-green mb-2">Félicitations !</h3>
-                                <p className="text-gray-300">Vous avez maîtrisé la méthodologie.</p>
+                                <h3 className="text-2xl font-bold text-cyber-green mb-2">Congratulations!</h3>
+                                <p className="text-gray-300">You have mastered the methodology.</p>
                             </div>
                         )}
                     </div>
 
                     {/* Right Column: Timeline */}
                     <div className="space-y-4 relative">
-                        <h2 className="text-2xl font-semibold mb-6 text-gray-300">Votre Méthodologie</h2>
+                        <h2 className="text-2xl font-semibold mb-6 text-gray-300">Your Methodology</h2>
 
                         {/* Timeline Line */}
                         <div className="absolute left-8 top-16 bottom-4 w-0.5 bg-gray-800 -z-10" />
@@ -135,7 +135,7 @@ export default function DrillPage() {
                                                     {filledStep.text}
                                                 </motion.span>
                                             ) : (
-                                                <span className="text-gray-600 italic text-sm">En attente...</span>
+                                                <span className="text-gray-600 italic text-sm">Pending...</span>
                                             )}
                                         </div>
                                     </div>
